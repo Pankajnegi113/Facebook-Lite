@@ -12,15 +12,13 @@ module.exports.profile=async function(req,res){
                     path:'user'
                }
           })
-          console.log('hello');
-          console.log(postNcomment);
+          console.log("helasdasdlo",postNcomment);
           if(postNcomment){
                return res.render('profile',{
                          title: "User profile",
                          posts: postNcomment
                     });
           }
-          
        }
      catch(err)
      {
