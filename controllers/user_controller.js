@@ -1,8 +1,32 @@
 const User = require('../models/user');
+const Post = require('../models/post');
+module.exports.profile=async function(req,res){
 
-module.exports.profile=function(req,res){
-     res.render('profile',{
-            title:"User profile"});
+     try{
+          let postNcomment = await Post.find({})
+          // .sort('_createdAt')
+          .populate('user')
+          .populate({
+               path:'comments',
+               populate:{
+                    path:'user'
+               }
+          })
+          console.log('hello');
+          console.log(postNcomment);
+          if(postNcomment){
+               return res.render('profile',{
+                         title: "User profile",
+                         posts: postNcomment
+                    });
+          }
+          
+       }
+     catch(err)
+     {
+         console.log("Error in fetching posts ",err);
+         return;
+     } 
 }
 
 module.exports.create=async function(req,res){
@@ -21,7 +45,6 @@ module.exports.create=async function(req,res){
           else{
                return res.redirect('back');
           }
-
      }
      catch(err){
           console.log('Error',err);
@@ -29,7 +52,10 @@ module.exports.create=async function(req,res){
 }
 
 module.exports.createSession=function(req,res){
-     return res.render('profile',{
-          title:'User-Profile'
-     })
+     return res.redirect('/users/profile');
 };
+
+module.exports.destroySession = function(req,res){
+     req.logout();
+     return res.redirect('/signIn');
+}

@@ -1,3 +1,60 @@
 <h1>
-    Welcome to USER/PROFILE
+<a href="/users/signOut">Sign Out</a>
+<div class="container">
+    <div class="suggestions">
+            suggestions
+
+    </div>
+
+    <div class="posts">
+        Hello, <%=user.firstname%> <%=user.lastname%>
+        <form action="/posts/create" id="new-post-form" method="post">
+        <textarea name="content" cols="30" rows="3" placeholder="Type here..."></textarea>
+        <button type="submit" value="Post">Post</button>
+        </form>
+
+        <div id="post-list">
+            <ul>
+                <%for(post of posts){%>
+                    <li>
+                        <p><%=post.content%></p>
+                        <div class="post-comments">
+                            <%if(locals.user){%>
+                                <form action="/comments/create" method="POST">
+                                    <input type="text" name="content" placeholder="Add comment here...">
+                                    <input type="hidden" name="post" value=<%=post._id%>>
+                                    <input type="submit" value="Add Comment"> 
+                                </form>
+                            <%}%>
+                            <div class="post-comments-list">
+                                <ul id="post-comment<%=post.id%>">
+                                    <%for(comment of post.comments){%>
+                                        <li>
+                                            <span><%=comment.content%></span>
+                                            <br>
+                                            <small><%=comment.user.firstname%> <%=comment.user.lastname%></small>
+                                        </li>
+                                    <%}%>
+                                </ul>
+
+                            </div>
+                            
+
+
+
+
+                        </div>
+                        <small style="margin-left: 150px;margin-top: -40px;">by <%=post.user.firstname%> <%=post.user.lastname%></small>
+                    </li>
+                <%}%>
+            </ul>
+        </div>
+    </div>
+
+    <div class="friends">
+            Friends
+
+    </div>
+</div>
+
 </h1>

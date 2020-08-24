@@ -3,7 +3,7 @@ module.exports.homeSignUp=function(req,res){
     // {
     //     return res.redirect('/users/profile');
     // }
-    res.render('homeSignUp',{
+    return res.render('homeSignUp',{
         title:"Codeial | Home"
     })
 }
@@ -13,7 +13,7 @@ module.exports.signIn=function(req,res){
     // {
     //     return res.redirect('/users/profile');
     // }
-    res.render('signIn',{
+    return res.render('signIn',{
         title:"Codeial | Home"
     })
     
