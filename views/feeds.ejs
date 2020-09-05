@@ -1,0 +1,133 @@
+<div class="containers">
+    <div class="suggestions-requests">
+        <!--friend suggestions-->
+            <div id="suggestions">
+                <h3>Suggestions</h3>
+                <% for(let i=0;i<users.length;i++){       
+                       let j=0;
+                       let k=0;
+                       var friends = myfriends.friendship;
+                       %>
+                        <% for( ;j<friends.length;j++ ){%>
+                            <%if(friends[j].id==users[i].id ){%>
+                                <%break;%>
+                            <%}%>
+                         <%}%>
+                        
+                         <% for( ;k<friendRequests.length;k++ ){%>
+                            <%if( (friendRequests[k].to_user.id==users[i].id || friendRequests[k].from_user.id==users[i].id) ){%>
+                                <%break;%>
+                            <%}%>
+                         <%}%>
+
+
+                        <%if(j==friends.length && k==friendRequests.length && locals.user.id!=users[i].id){%>       
+                            <%if(users[i].postImg){%>
+                                <li>
+                                    <img src="<%=users[i].avatar%>"  alt="profile pic" height="50">
+                                    <%=users[i].firstname%>
+                                
+                                    <button><a style="color: white;" href="/users/sendRequest/<%=users[i].id%>">Send Request</a></button>
+                                </li>
+                            <%}
+                            else{%>
+                                <li>
+                                    <img src="/images/default.jpeg"  alt="profile pic" height="50"> 
+                                    <%=users[i].firstname%>
+                                    <button><a style="color: white;" href="/users/sendRequest/<%=users[i].id%>">Send Request</a></button>
+                                
+                                </li>
+                            <%}%>
+
+
+                            
+                        <%}%>
+                <%}%>
+            </div>
+             <!--friend request-->
+            <div id="requests">
+                <h3>Requests</h3>
+                <% for(friendRequest of friendRequests){%>
+                    <%if(friendRequest.from_user.id!=locals.user.id && friendRequest.to_user.id==locals.user.id){%>              
+                        <%if(friendRequest.from_user.postImg ){%>
+                            <li> <img src="<%=friendRequest.from_user.avatar%>"  alt="profile pic" height="50"> <%=friendRequest.from_user.firstname%></li>
+                            <%}
+                        else{%>
+                            <li> <img src="/images/default.jpeg"  alt="profile pic" height="50"> <%=friendRequest.from_user.firstname%></li>
+                            <%}%>
+                        <button><a href="/users/addFriend/<%=friendRequest.from_user._id%>">Add Friend</a></button>
+                    <%}%>
+                <%}%>
+            </div>
+    </div>
+
+    <div class="requests">
+    </div>
+     <!--user posts-->
+    <div class="posts">
+        Hello, posts goes here!
+        <form action="/posts/create" class="form-inline" id="new-post-form" enctype="multipart/form-data" method="post">
+        <textarea name="content" id="post-textarea" type="text" cols="30" class="form-control col-sm-8" rows="3" placeholder="Type here..."></textarea>
+        <input type="file" name="postImg" class="form-control-file" placholder="Update Profile pic">
+        <button type="submit" value="Post" class="btn btn-primary mb-2" >Post</button>
+        </form>
+        <hr>
+        <div id="post-list-containers">
+            <ul>
+            <%for(post of posts){%>
+                <%-include('post')%>
+            <%}%>
+            </ul>
+        </div>
+    </div>
+
+     <!--friend list-->
+    <div class="friends">
+        <h3>My Friends List</h3>
+        <%for(friend of myfriends.friendship){%>       	     
+	       <%if(friend.postImg){%>
+            <li><img src="<%=friend.avatar%>"  alt="profile pic" height="50"><%=friend.firstname%></li>
+             <%}
+          else{%>
+                 <li><img src="/images/default.jpeg"  alt="profile pic" height="50"><%=friend.firstname%></li>
+            <%}%>  
+            <button><a href="/users/removeFriend/<%=friend._id%>">Remove Friend</a></button>
+        <%}%>
+</div>
+</div>
+<% if (locals.user){ %>
+    <div id="user-chat-box" style="background-color: teal;">
+        <h5 style="text-align: center;color: aliceblue;">Broadcast Msg</h5>
+		<ul id="chat-messages-list">
+			<li class="other-message" style="color: black;">
+			</li>
+			<li class="self-message" style="color: black;">
+		
+			</li>
+		</ul>
+		<div id="chat-message-input-container">
+			<input id="chat-message-input" placeholder="Type message here">
+			<button id="send-message">Send</button>
+		</div>
+
+	</div>
+<% } %>
+
+
+
+<script src="/js/feeds-posts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script src="/js/chat_engine.js"></script>
+<!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
+<script src="/js/toggle_likes.js"></script>
+<script>
+    $('.toggle-like-button').each(function(){
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+    });
+</script>
+<% if (locals.user){ %>
+<script>
+    new ChatEngine('user-chat-box', '<%= locals.user.firstname+" "+locals.user.lastname %>')
+</script>
+<% } %>

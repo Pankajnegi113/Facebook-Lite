@@ -1,0 +1,210 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.containers{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: row;
+    background-color: lightcoral;
+}
+
+.post-com-del li{
+    color:antiquewhite;
+}
+
+.post-com-del li span{
+    margin-left: 2%;
+}
+
+.post-com-del li small{
+    margin-right: 2%;
+    margin-top: 1%;
+}
+
+
+#chat-messages-list li{
+    color: black;
+}
+
+
+.toggle-like-button{
+    color: yellow;
+}
+
+
+.suggestions-requests{
+    margin-left: 5%;
+    width: 30%;
+    display: flex;
+}
+
+#requests{
+    margin-left: 20%;
+}
+
+.posts{
+    width: 40%;
+    margin-left: 8%;
+}
+
+.friends{
+    width: 28%;
+    text-align: center;
+
+}
+
+#post-list{
+    border: 1px solid black;
+    margin-bottom: 5%;
+}
+
+.post-comments{
+    border: 1px solid black;
+    padding:5px;
+}
+
+li{
+    list-style-type: none;
+}
+
+
+
+.post-content{
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    border: 1px solid black;
+}
+
+#new-post-form button{
+    margin-left: 2%;
+}
+
+
+#post-list-container{
+
+    margin-left: 20%;
+}
+
+#delete-post{
+    color: rgb(100, 7, 7);
+    font-size: 20px;
+    float: right;
+    margin-right: 2px;
+}
+
+.post-content .toggle-like-button, .post-content .fa-heart{
+    font-size: 20px;
+}
+
+.post-com-del .fa-trash{
+    color: rgb(82, 6, 6);
+}
+
+.post-com-del li{
+    background-color: dimgrey;
+    margin: 2%;
+}
+
+.post-com-del small,.post-com-del .delete-com{
+    float: right;
+}
+
+.comment-text{
+    width: 69%;
+}
+
+::-webkit-input-placeholder {
+    text-align: center;
+  }
+  
+:-moz-placeholder {
+    text-align: center;
+  }
+
+.comment-submit{
+    width: 28%;
+}
+
+#suggestions button{
+
+    background-color:dimgrey;
+    
+}
+
+#suggestions img{
+    border:2px solid black
+}
+
+
+.friends img{
+    border: 1px solid aliceblue;
+}
+
+
+#user-chat-box {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    border: 1px dashed grey;
+    height: 280px;
+    width: 270px;
+    background: white;
+    padding: 5px;
+    box-shadow: 1px 1px 1px 1px lightgrey; 
+}
+
+#user-chat-box #chat-messages-list {
+    list-style: none;
+    padding: 10px;
+    height: 69%;
+    background-color: white;
+    overflow: auto; 
+}
+
+#user-chat-box #chat-messages-list .other-message {
+    text-align: left;
+    padding: 5px;
+}
+
+#user-chat-box #chat-messages-list .other-message span {
+    display: inline-block;
+    padding: 15px;
+    background-color: #ffa0a0;
+}
+    
+#user-chat-box #chat-messages-list .self-message {
+    text-align: right;
+    padding: 5px; 
+}
+    
+#user-chat-box #chat-messages-list .self-message span {
+    display: inline-block;
+    padding: 15px;
+    background-color: #a0dcff;
+}
+
+#user-chat-box #chat-message-input-container {
+    height: 24%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#user-chat-box #chat-message-input-container #chat-message-input {
+    height: 50%;
+    width: 70%; 
+}
+
+#user-chat-box #chat-message-input-container #send-message {
+    height: 50%;
+    width: 30%;
+    font-size: 25px;
+    color: white;
+    border: none;
+    background: #58d258;
+}
+  

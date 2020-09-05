@@ -1,0 +1,69 @@
+<li id="post_<%=post._id%>">
+     <!--user posts-->
+            <div class="post-content">
+                <%if(post.postImg){%>
+                    <img src="<%=post.postImg%>" height="100" alt="post-img">
+                <%}%>
+                <br>
+                <span id="post-cont"><%=post.content%></span><br>
+                <%if( locals.user && post && post.user && locals.user.id== post.user.id ){%>
+                    <small>
+                        <% if (locals.user){ %>
+                            <a class="toggle-like-button" data-likes="<%= post.likes.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                                    <%= post.likes.length %> <i class="far fa-heart"></i>
+                            </a>
+                        <% }else{ %>
+                            <%= post.likes.length %> Likes
+                        <% } %>
+                    </small>
+
+                    <small>
+                        <a id="delete-post" href="/posts/destroy/<%=post.id%>"><i class="fas fa-trash"></i></a>
+                    </small>
+                <%}%>
+            </div>
+           
+             <!--comment-->
+            <div class="post-comments">
+                <%if(locals.user){%>
+                    <form id="post-com" action="/comments/create" method="POST">
+                        <input type="text" class="form-control comment-text" style=" display: inline;width:69%;" name="content" placeholder="Add comment here...">
+                        <input type="hidden" name="post" value=<%=post._id%>>
+                        <input type="submit" class="btn btn-info comment-submit" value="Add Comment" style="width: 29%;"> 
+                    </form>
+                <%}%>
+                <div class="post-comments-list">
+                    <ul class="post-com-del" id="post-comment-<%=post.id%>">
+                        <%for(comment of post.comments){%>
+                            <li id="comment_<%=comment._id%>">
+                                <span><%=comment.content%></span>
+                                <%if(comment && comment.user){%>
+                                <small><%=comment.user.firstname%> <%=comment.user.lastname%></small>
+                                <%}%>
+                                
+                                <%if(locals.user && ( locals.user.id==comment.user.id || locals.user.id==post.user.id ) ){%>
+                                    <smal>
+                                        <a  class="delete-com" href="/comments/destroy/<%=comment.id%>"><i class="fas fa-trash"></i></a>
+                                    </smal>
+                                <%}%>
+                                &nbsp&nbsp&nbsp
+                                <small>
+                                    <% if (locals.user){ %>
+                                        <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                                                <%= comment.likes.length %> <i class="far fa-heart"></i>
+                                        </a>
+                                    <% }else{ %>
+                                        <%= comment.likes.length %> <i class="far fa-heart"></i>
+                                    <% } %>
+                                </small>
+                                &nbsp&nbsp&nbsp
+                            </li>
+                        <%}%>
+                    </ul>
+                </div>
+            </div>
+            <%if(post && post.user){%>
+            <footer  class="blockquote-footer">by <%=post.user.firstname%> <%=post.user.lastname%></footer>
+           <%}%>
+        </li>
+        

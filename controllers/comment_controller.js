@@ -1,8 +1,10 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
+const Like = require('../models/like');
+
+//create comments
 module.exports.create = async function(req,res){
     try{
-        console.log(req.body.post);
         let post = await Post.findById(req.body.post)
         if(post)
         {
@@ -13,6 +15,14 @@ module.exports.create = async function(req,res){
                 });
             post.comments.push(comment);
             post.save();
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        comment:comment
+                    },
+                    message:"Post deleted"
+                });
+            }
             res.redirect('back');
         }
     }
@@ -24,16 +34,25 @@ module.exports.create = async function(req,res){
     }
 }
 
-
+//delete comment
 module.exports.destroy = async function(req,res){
     try{    
+        console.log(req.params.id);
         let comment = await Comment.findById(req.params.id);
-        console.log(comment);
-        if(comment.user == req.user.id){
+        console.log("cghv  hv ",comment);
             let postId = comment.post;
             comment.remove();
-            Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
-        }
+            await Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
+
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        commentId:req.params.id
+                    },
+                    message:"Comment deleted"
+                });
+            }
         return res.redirect('back');
     }
 

@@ -6,4 +6,6 @@ router.get('/signIn', homeController.signIn);
 router.use('/users',require('./users'));
 router.use('/posts',require('./posts'));
 router.use('/comments',require('./comments'));
+router.use('/header',require('./header'));
+router.use('/likes',require('./likes'));
 module.exports=router;

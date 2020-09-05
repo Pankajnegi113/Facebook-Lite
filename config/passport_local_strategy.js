@@ -1,21 +1,37 @@
 const User=require('../models/user');
 const passport=require('passport');
 const LocalStrategy=require('passport-local').Strategy;
+const bcrypt=require('bcrypt');
 passport.use(new LocalStrategy({
-    usernameField:'email'},function(email,password,done){
+    usernameField:'email',passReqToCallback:true},function(req,email,password,done){
         //find a user and establish identity
         User.findOne({email:email},function(err,user){
             if(err)
             {
                 console.log("Error in finding user");
+                req.flash('error',err);
                 return done(err);
             }
-            //checking if user entered pwd matches with db password, by first decrypting the db password
-            if(!user || password!=user.password){
+
+            if(!user){
                 console.log("Invalid Username/Password");
+                req.flash('error','Invalid Username/Password');
                 return done(null,false);
             }
-            return done(null,user);
+
+            //checking if user entered pwd matches with db password, by first decrypting the db password
+            bcrypt.compare(password, user.password, function(err, res) {
+                if(res) {
+                    return done(null,user);
+                } 
+                else {
+                    console.log("Invalid Username/Password");
+                    req.flash('error','Invalid Username/Password');
+                    return done(null,false);
+                } 
+              });
+            
+            
         })
 }));
 
@@ -41,7 +57,7 @@ passport.checkAuthentication=function(req,res,next){
         return next();
     }
     //if not signin then redirect to login
-    return res.redirect('/users/signIn');
+    return res.redirect('/signIn');
 }
 
 passport.setAuthenticatedUser=function(req,res,next){

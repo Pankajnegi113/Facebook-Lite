@@ -1,8 +1,28 @@
+<%if(locals.user && locals.user.id){%>
 <div class="header">
-       <header>
-            <h3>friends</h3>
-            <h3>Messages</h3>
-            <h3>Profile</h3>
-            <h3>Signout</h3>
-       </header>
+    <div class="msgs">
+        <a id="chat"  onclick="show_hide()" style="color: white;">Chat</a>
+    </div>
+    <div class="feeds">
+        <a style="color: white;"href="/users/feeds">Feeds</a>
+    </div>
+    <div class="profile">
+        <a style="color: white;" href="/header/userProfile">Profile</a>
+    </div>
+    <div class="sign-out">
+        <a style="color: white;" href="/header/signOut">Sign Out</a>
+    </div>
 </div>
+<%}%>
+<script>
+    //to hide and show broadcast msg box
+    function show_hide(){
+        var x=document.getElementById('user-chat-box');
+        if(x.style.display=="block"){
+            x.style.display="none";
+        }
+		else{
+            x.style.display="block";
+        }
+    } 
+</script>

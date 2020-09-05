@@ -1,3 +1,11 @@
-<footer>
-    Page footer
-</footer>
+<!-- Footer -->
+<%if(locals.user && locals.user.id){%>
+<footer class="p-2 mb-2 bg-dark text-white" style="margin-bottom: 0;">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href="https://mdbootstrap.com/"> MADE IN INDIA&#10084 </a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+<%}%>
+  <!-- Footer -->
